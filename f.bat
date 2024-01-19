@@ -1,1 +1,2 @@
-gofmt -l -w chatgpt-unpack.go
+gofmt -l -w chatgpt-unpack.go||exit /b
+git diff
