@@ -69,9 +69,12 @@ func main() {
 				}
 				for i := 0; i < len(value); i++ {
 					c := value[i]
-					if c == '\\' && i+1 < len(value) && value[i+1] == 'n' {
+					if c == '\\' && i+1 < len(value) {
 						i++
-						c = '\n'
+						c = value[i]
+						if c == 'n' {
+							c = '\n'
+						}
 					}
 					fmt.Printf("%c", c)
 				}
