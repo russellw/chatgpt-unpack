@@ -37,22 +37,47 @@ func main() {
 			log.Fatal(err)
 		}
 		jsonparser.ObjectEach(mapping, func(key []byte, value []byte, dataType jsonparser.ValueType, offset int) error {
+			// message
 			message, _, _, err := jsonparser.Get(value, "message")
 			if err != nil {
 				log.Fatal(err)
 			}
+			if len(message) == 4 {
+				return nil
+			}
+
+			// author
+			author, err := jsonparser.GetString(message, "author", "role")
+			if err != nil {
+				log.Fatal(err)
+			}
+			switch {
+			case author == "user":
+				fmt.Print("Q: ")
+			case author == "assistant":
+				fmt.Print("A: ")
+			case author == "system":
+				return nil
+			default:
+				log.Fatal(author)
+			}
+
+			// parts
 			_, err = jsonparser.ArrayEach(message, func(value []byte, dataType jsonparser.ValueType, offset int, err error) {
 				if err != nil {
 					log.Fatal(err)
 				}
-				fmt.Printf("%s\n", value)
+				fmt.Println(string(value))
 			}, "content", "parts")
 			if err != nil {
 				log.Fatal(err)
 			}
+			if author == "assistant" {
+				fmt.Println()
+			}
 			return nil
 		})
-		os.Exit(0)
+		fmt.Println()
 	})
 	if err != nil {
 		log.Fatal(err)
