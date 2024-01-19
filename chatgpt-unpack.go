@@ -37,10 +37,19 @@ func main() {
 			log.Fatal(err)
 		}
 		jsonparser.ObjectEach(mapping, func(key []byte, value []byte, dataType jsonparser.ValueType, offset int) error {
-			mappingID := string(key)
-
-			fmt.Printf("Mapping ID: %s\n", mappingID)
-
+			message, _, _, err := jsonparser.Get(value, "message")
+			if err != nil {
+				log.Fatal(err)
+			}
+			_, err = jsonparser.ArrayEach(message, func(value []byte, dataType jsonparser.ValueType, offset int, err error) {
+				if err != nil {
+					log.Fatal(err)
+				}
+				fmt.Printf("%s\n", value)
+			}, "content", "parts")
+			if err != nil {
+				log.Fatal(err)
+			}
 			return nil
 		})
 		os.Exit(0)
