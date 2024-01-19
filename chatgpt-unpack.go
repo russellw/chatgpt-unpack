@@ -1,17 +1,16 @@
 package main
 
 import (
-    "os"
-    "fmt"
-    "log"
+	"fmt"
+	"log"
+	"os"
 )
 
-//import "github.com/buger/jsonparser"
+import "github.com/buger/jsonparser"
 
 func main() {
-    text, err := os.ReadFile("file.txt")
-    if err != nil {
-        log.Fatal( err)
-    }
-    fmt.Println(string(text))
+	text, err := os.ReadFile("file.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
 }
