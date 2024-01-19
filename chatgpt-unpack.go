@@ -67,8 +67,16 @@ func main() {
 				if err != nil {
 					log.Fatal(err)
 				}
-				fmt.Println(string(value))
-			}, "content", "parts")
+				for i := 0; i < len(value); i++ {
+					c:=value[i]
+					if c=='\\'&& i+1<len(value)&& value[i+1]=='n'{
+						i++
+						c='\n'
+					}
+					fmt.Printf("%c",c)
+				}
+					fmt.Println()
+					}, "content", "parts")
 			if err != nil {
 				log.Fatal(err)
 			}
