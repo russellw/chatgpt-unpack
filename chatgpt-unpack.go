@@ -42,7 +42,8 @@ func main() {
 			fmt.Printf("Mapping ID: %s\n", mappingID)
 
 			return nil
-		}, "mapping")
+		})
+		os.Exit(0)
 	})
 	if err != nil {
 		log.Fatal(err)
