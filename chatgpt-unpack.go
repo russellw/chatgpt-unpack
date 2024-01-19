@@ -18,6 +18,8 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		// heading
 		title, err := jsonparser.GetString(value, "title")
 		if err != nil {
 			log.Fatal(err)
@@ -28,21 +30,19 @@ func main() {
 		}
 		tm := time.Unix(int64(updateTime), 0)
 		fmt.Printf("%s:: %s\n", tm.Format("2006-01-02 15:04:05 MST"), title)
-		/*
-			// Access the 'mapping' object within the conversation
-			mapping, _, _, _ := jsonparser.Get(value, "mapping")
-			// Iterate over the mapping objects
-			jsonparser.ObjectEach(mapping, func(key []byte, value []byte, dataType jsonparser.ValueType, offset int) error {
-				// Access fields of each mapping object
-				mappingID := string(key)
-				parent, _ := jsonparser.GetString(value, "parent")
 
-				fmt.Printf("Mapping ID: %s\n", mappingID)
-				fmt.Printf("Parent: %s\n", parent)
+		// messages
+		mapping, _, _, err := jsonparser.Get(value, "mapping")
+		if err != nil {
+			log.Fatal(err)
+		}
+		jsonparser.ObjectEach(mapping, func(key []byte, value []byte, dataType jsonparser.ValueType, offset int) error {
+			mappingID := string(key)
 
-				return nil
-			}, "mapping")
-		*/
+			fmt.Printf("Mapping ID: %s\n", mappingID)
+
+			return nil
+		}, "mapping")
 	})
 	if err != nil {
 		log.Fatal(err)
