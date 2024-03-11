@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"time"
 )
@@ -55,6 +56,8 @@ func main() {
 				fmt.Print("Q: ")
 			case author == "assistant":
 				fmt.Print("A: ")
+			case author == "tool":
+				fmt.Print("A: ")
 			case author == "system":
 				return nil
 			default:
@@ -80,7 +83,7 @@ func main() {
 				fmt.Println()
 			}, "content", "parts")
 			if err != nil {
-				panic(err)
+				log.Println(string(message))
 			}
 			if author == "assistant" {
 				fmt.Println()
