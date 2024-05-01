@@ -11,10 +11,15 @@ class Program {
 		// Deserialize the JSON content into a List of Conversation objects.
 		List<Conversation> conversations = JsonSerializer.Deserialize<List<Conversation>>(jsonContent);
 
+		// Reverse the order of conversations to start from the most recent.
+		conversations.Reverse();
+
 		// Loop through each conversation and its messages.
 		foreach (var conversation in conversations) {
-			Console.WriteLine("Title: " + conversation.title);
-			Console.WriteLine("Created On: " + DateTimeOffset.FromUnixTimeSeconds((long)conversation.CreateTime).DateTime);
+			var update_time = DateTimeOffset.FromUnixTimeSeconds((long)conversation.update_time).DateTime;
+			Console.Write(update_time);
+			Console.Write(":: ");
+			Console.WriteLine(conversation.title);
 
 			// Loop through each message in the mapping and print its content.
 			if (conversation.Mapping != null)
@@ -32,7 +37,7 @@ class Program {
 
 public class Conversation {
 	public string title { get; set; }
-	public double CreateTime { get; set; }
+	public double update_time { get; set; }
 	public Dictionary<string, MessageNode> Mapping { get; set; }
 }
 
