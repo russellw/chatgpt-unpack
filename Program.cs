@@ -17,7 +17,7 @@ class Program {
 		// Loop through each conversation and its messages.
 		foreach (var conversation in conversations) {
 			var update_time = DateTimeOffset.FromUnixTimeSeconds((long)conversation.update_time).DateTime;
-			Console.Write(update_time);
+			Console.Write(update_time.ToString("yyyy-MM-dd"));
 			Console.Write(":: ");
 			Console.WriteLine(conversation.title);
 
