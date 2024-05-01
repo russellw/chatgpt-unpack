@@ -14,23 +14,25 @@ class Program {
 		// Reverse the order of conversations to start from the most recent.
 		conversations.Reverse();
 
+		using StreamWriter writer = new("conversations.txt");
+
 		// Loop through each conversation and its messages.
 		foreach (var conversation in conversations) {
 			var update_time = DateTimeOffset.FromUnixTimeSeconds((long)conversation.update_time).DateTime;
-			Console.Write(update_time.ToString("yyyy-MM-dd"));
-			Console.Write(":: ");
-			Console.WriteLine(conversation.title);
+			writer.Write(update_time.ToString("yyyy-MM-dd"));
+			writer.Write(":: ");
+			writer.WriteLine(conversation.title);
 
 			// Loop through each message in the mapping and print its content.
 			if (conversation.mapping != null)
 				foreach (var messageEntry in conversation.mapping) {
 					var message = messageEntry.Value.message;
 					if (message != null && message.content != null && message.content.parts != null) {
-						Console.WriteLine("Message Content: " + string.Join("\n", message.content.parts));
+						writer.WriteLine("Message Content: " + string.Join("\n", message.content.parts));
 					}
 				}
 
-			Console.WriteLine(); // Print a blank line for better readability.
+			writer.WriteLine(); // Print a blank line for better readability.
 		}
 	}
 }
