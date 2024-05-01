@@ -60,5 +60,5 @@ public class Author {
 
 public class Content {
 	public string ContentType { get; set; }
-	public List<string> parts { get; set; }
+	public List<JsonElement> parts { get; set; }
 }
