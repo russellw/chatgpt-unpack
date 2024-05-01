@@ -24,9 +24,9 @@ class Program {
 			// Loop through each message in the mapping and print its content.
 			if (conversation.mapping != null)
 				foreach (var messageEntry in conversation.mapping) {
-					var message = messageEntry.Value.Message;
-					if (message != null && message.Content != null && message.Content.Parts != null) {
-						Console.WriteLine("Message Content: " + string.Join("\n", message.Content.Parts));
+					var message = messageEntry.Value.message;
+					if (message != null && message.content != null && message.content.parts != null) {
+						Console.WriteLine("Message Content: " + string.Join("\n", message.content.parts));
 					}
 				}
 
@@ -43,14 +43,14 @@ public class Conversation {
 
 public class MessageNode {
 	public string Id { get; set; }
-	public Message Message { get; set; }
+	public Message message { get; set; }
 }
 
 public class Message {
 	public string Id { get; set; }
 	public Author Author { get; set; }
 	public double? CreateTime { get; set; }
-	public Content Content { get; set; }
+	public Content content { get; set; }
 }
 
 public class Author {
@@ -60,5 +60,5 @@ public class Author {
 
 public class Content {
 	public string ContentType { get; set; }
-	public List<string> Parts { get; set; }
+	public List<string> parts { get; set; }
 }
