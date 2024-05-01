@@ -22,8 +22,8 @@ class Program {
 			Console.WriteLine(conversation.title);
 
 			// Loop through each message in the mapping and print its content.
-			if (conversation.Mapping != null)
-				foreach (var messageEntry in conversation.Mapping) {
+			if (conversation.mapping != null)
+				foreach (var messageEntry in conversation.mapping) {
 					var message = messageEntry.Value.Message;
 					if (message != null && message.Content != null && message.Content.Parts != null) {
 						Console.WriteLine("Message Content: " + string.Join("\n", message.Content.Parts));
@@ -38,7 +38,7 @@ class Program {
 public class Conversation {
 	public string title { get; set; }
 	public double update_time { get; set; }
-	public Dictionary<string, MessageNode> Mapping { get; set; }
+	public Dictionary<string, MessageNode> mapping { get; set; }
 }
 
 public class MessageNode {
