@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-class Program {
+static class Program {
 	static void Main() {
 		// Path to the JSON file containing the ChatGPT messages.
 		string filePath = "conversations.json";
@@ -26,18 +26,28 @@ class Program {
 			// Loop through each message in the mapping and print its content.
 			if (conversation.mapping != null)
 				foreach (var messageEntry in conversation.mapping) {
-					var message = messageEntry.Value.message;
-					if (message != null && message.content != null && message.content.parts != null) {
-						writer.WriteLine("Message Content: " + string.Join("\n", message.content.parts));
+					var text = Text(messageEntry.Value.message);
+					if (!string.IsNullOrEmpty(text)) {
+						writer.WriteLine(text);
 					}
 				}
 
 			writer.WriteLine(); // Print a blank line for better readability.
 		}
 	}
+
+	static string Text(Message message) {
+		if (message == null)
+			return null;
+		if (message.content == null)
+			return null;
+		if (message.content.parts == null)
+			return null;
+		return string.Join("\n", message.content.parts);
+	}
 }
 
-public class Conversation {
+class Conversation {
 	public string title { get; set; }
 	public double update_time { get; set; }
 	public Dictionary<string, MessageNode> mapping { get; set; }
