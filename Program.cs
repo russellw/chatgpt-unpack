@@ -26,10 +26,19 @@ static class Program {
 			// Loop through each message in the mapping and print its content.
 			if (conversation.mapping != null)
 				foreach (var messageEntry in conversation.mapping) {
-					var text = Text(messageEntry.Value.message);
-					if (!string.IsNullOrEmpty(text)) {
-						writer.WriteLine(text);
+					var message = messageEntry.Value.message;
+					switch (Role(message)) {
+					case "user":
+						writer.Write("Q: ");
+						break;
+					case "assistant":
+					case "tool":
+						writer.Write("A: ");
+						break;
 					}
+					var text = Text(message);
+					if (!string.IsNullOrEmpty(text))
+						writer.WriteLine(text);
 				}
 
 			writer.WriteLine(); // Print a blank line for better readability.
@@ -45,6 +54,14 @@ static class Program {
 			return null;
 		return string.Join("\n", message.content.parts);
 	}
+
+	static string Role(Message message) {
+		if (message == null)
+			return null;
+		if (message.author == null)
+			return null;
+		return message.author.role;
+	}
 }
 
 class Conversation {
@@ -58,13 +75,12 @@ class MessageNode {
 }
 
 class Message {
-	public Author Author { get; set; }
+	public Author author { get; set; }
 	public Content content { get; set; }
 }
 
 class Author {
-	public string Role { get; set; }
-	public string Name { get; set; }
+	public string role { get; set; }
 }
 
 class Content {
