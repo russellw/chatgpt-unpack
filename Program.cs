@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 
 class Program {
-	static void Main(string[] args) {
+	static void Main() {
 		// Path to the JSON file containing the ChatGPT messages.
 		string filePath = "conversations.json";
 
