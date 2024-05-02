@@ -53,21 +53,21 @@ class Conversation {
 	public Dictionary<string, MessageNode> mapping { get; set; }
 }
 
-public class MessageNode {
+class MessageNode {
 	public Message message { get; set; }
 }
 
-public class Message {
+class Message {
 	public Author Author { get; set; }
 	public Content content { get; set; }
 }
 
-public class Author {
+class Author {
 	public string Role { get; set; }
 	public string Name { get; set; }
 }
 
-public class Content {
+class Content {
 	public string ContentType { get; set; }
 	public List<JsonElement> parts { get; set; }
 }
