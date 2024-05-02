@@ -44,14 +44,11 @@ public class Conversation {
 }
 
 public class MessageNode {
-	public string Id { get; set; }
 	public Message message { get; set; }
 }
 
 public class Message {
-	public string Id { get; set; }
 	public Author Author { get; set; }
-	public double? CreateTime { get; set; }
 	public Content content { get; set; }
 }
 
