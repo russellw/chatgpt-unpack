@@ -27,21 +27,15 @@ static class Program {
 			if (conversation.mapping != null)
 				foreach (var messageEntry in conversation.mapping) {
 					var message = messageEntry.Value.message;
-					switch (Role(message)) {
-					case "user":
-						writer.Write("Q: ");
-						break;
-					case "assistant":
-					case "tool":
-						writer.Write("A: ");
-						break;
-					}
 					var text = Text(message);
-					if (!string.IsNullOrEmpty(text))
-						writer.WriteLine(text);
+					if (string.IsNullOrEmpty(text))
+						continue;
+					var user = User(message);
+					writer.Write(user ? "Q: " : "A: ");
+					writer.WriteLine(text);
+					if (!user)
+						writer.WriteLine(); // Print a blank line for better readability.
 				}
-
-			writer.WriteLine(); // Print a blank line for better readability.
 		}
 	}
 
@@ -61,6 +55,10 @@ static class Program {
 		if (message.author == null)
 			return null;
 		return message.author.role;
+	}
+
+	static bool User(Message message) {
+		return Role(message) == "user";
 	}
 }
 
