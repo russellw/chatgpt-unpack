@@ -5,4 +5,5 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "member", Target = "~P:Conversation.title")]
+[assembly:SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
+[assembly:SuppressMessage("Design", "CA1050:Declare types in namespaces", Justification = "<Pending>")]
