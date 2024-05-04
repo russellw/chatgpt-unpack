@@ -18,24 +18,49 @@ static class Program {
 
 		// Loop through each conversation and its messages.
 		foreach (var conversation in conversations) {
+			if (conversation.mapping == null) {
+				Console.WriteLine(conversation.title);
+				continue;
+			}
+			bool answer = false;
+			foreach (var messageEntry in conversation.mapping) {
+				var message = messageEntry.Value.message;
+				var text = Text(message);
+				if (string.IsNullOrEmpty(text))
+					continue;
+				var user = User(message);
+				if (!user)
+					answer = true;
+			}
+			if (!answer) {
+				Console.WriteLine(conversation.title);
+				foreach (var messageEntry in conversation.mapping) {
+					var message = messageEntry.Value.message;
+					var text = Text(message);
+					if (string.IsNullOrEmpty(text))
+						continue;
+					Console.WriteLine(text);
+				}
+				continue;
+			}
+
 			var update_time = DateTimeOffset.FromUnixTimeSeconds((long)conversation.update_time).DateTime;
 			writer.Write(update_time.ToString("yyyy-MM-dd"));
 			writer.Write(":: ");
 			writer.WriteLine(conversation.title);
 
 			// Loop through each message in the mapping and print its content.
-			if (conversation.mapping != null)
-				foreach (var messageEntry in conversation.mapping) {
-					var message = messageEntry.Value.message;
-					var text = Text(message);
-					if (string.IsNullOrEmpty(text))
-						continue;
-					var user = User(message);
-					writer.Write(user ? "Q: " : "A: ");
-					writer.WriteLine(text);
-					if (!user)
-						writer.WriteLine(); // Print a blank line for better readability.
-				}
+			foreach (var messageEntry in conversation.mapping) {
+				var message = messageEntry.Value.message;
+				var text = Text(message);
+				if (string.IsNullOrEmpty(text))
+					continue;
+				var user = User(message);
+				writer.Write(user ? "Q: " : "A: ");
+				writer.WriteLine(text);
+				if (!user)
+					writer.WriteLine(); // Print a blank line for better readability.
+			}
 		}
 	}
 
