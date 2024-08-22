@@ -400,3 +400,4 @@ FodyWeavers.xsd
 *.json
 conversations.txt
 chat.html
+*.exe
